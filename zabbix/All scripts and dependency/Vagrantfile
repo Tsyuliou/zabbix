@@ -1,0 +1,18 @@
+Vagrant.configure("2") do |config|
+	#box
+  config.vm.box = "sbeliakou/centos-7.3-x86_64-minimal"
+	#ZabbixS
+  config.vm.define "server" do |up|
+    up.vm.provision "shell", inline:"/vagrant/zabbixS.sh"    
+    up.vm.network "private_network", ip: "192.168.56.2"         
+  end
+
+	#ZabbixA
+  config.vm.define "agent" do |up|
+   up.vm.provision "shell", inline:"/vagrant/zabbixA.sh"
+   up.vm.provision "shell", inline:"/vagrant/JDK-1.8.sh"  
+   up.vm.provision "shell", inline:"/vagrant/t.sh"     
+   up.vm.network "private_network", ip: "192.168.56.3"               
+  end
+end
+
